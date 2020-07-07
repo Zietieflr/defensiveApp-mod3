@@ -10,24 +10,28 @@ handleData(bearApp)
 function handleData(data){
   [true, false].forEach(boolean => {
     renderListData(
-      sortByBoolean(data, 'favorited', boolean), 
+      organizeData(
+        sortByBoolean(data, 'bear', boolean), 
+        boolean
+      ),
       document.querySelector('main')
-  )})
+    )
+  })
 }
 
 function sortByBoolean(data, attribute, boolean){
-  return organizeData(data.filter(el => el[attribute] == boolean), boolean)
+  return data.filter(el => el[attribute] == boolean)
 }
 
-function organizeData(data, category){
-  const objectData = {category, children: []}
+function organizeData(data, content){
+  const objectData = {content, children: []}
   data.forEach(element => objectData.children.push(element.pathName))
   return objectData
 }
 
 function renderListData(data, $parent){
-  const { category, children } = data 
-  $list = generateElement($parent, category, 'ul')
+  const { content, children } = data 
+  $list = generateElement($parent, content, 'ul')
   children.forEach(child => generateElement($list, child, 'li'))
 }
 
